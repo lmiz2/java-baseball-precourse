@@ -57,6 +57,10 @@ public class BaseBallResult {
             sb.append(" ");
             sb.append(BALL.getSymbol());
         }
+        if(sb.lastIndexOf(" ") == sb.length()-1){
+            sb.delete(sb.length()-1, sb.length());
+        }
         return sb.toString();
     }
+
 }
