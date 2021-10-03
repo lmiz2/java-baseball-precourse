@@ -5,6 +5,6 @@ import baseball.io.Output;
 public class ConsoleOutput implements Output {
     @Override
     public void write(String text) {
-        System.out.println(text);
+        System.out.print(text);
     }
 }

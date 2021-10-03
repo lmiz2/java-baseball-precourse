@@ -22,10 +22,12 @@ public class BaseBallResult {
 
     private final int ballCount;
     private final int strikeCount;
+    private final int numberLength;
 
-    public BaseBallResult(int strikeCount, int ballCount) {
+    public BaseBallResult(int strikeCount, int ballCount, int numberLength) {
         this.strikeCount = strikeCount;
         this.ballCount = ballCount;
+        this.numberLength = numberLength;
     }
 
     public int getBallCount() {
@@ -38,6 +40,10 @@ public class BaseBallResult {
 
     public boolean isNothing(){
         return ballCount <= 0 && strikeCount <= 0;
+    }
+
+    public boolean isFinished() {
+        return strikeCount == numberLength;
     }
 
     @Override

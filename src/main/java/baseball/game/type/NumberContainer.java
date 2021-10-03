@@ -1,37 +1,56 @@
 package baseball.game.type;
 
 import baseball.error.IllegalInputException;
+import nextstep.utils.NumberUtil;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class NumberContainer {
 
-    public final static int NUMBERS_LENGTH = 3;
-
     private final List<Integer> numbers;
 
-    public static NumberContainer of(int firstNumber, int secondNumber, int thirdNumber) {
-        return new NumberContainer(firstNumber, secondNumber, thirdNumber);
+    public static NumberContainer of(int... numbers) {
+        return from(NumberUtil.arrayToList(numbers));
     }
 
     public static NumberContainer from(List<Integer> numbers) {
-        if(Objects.isNull(numbers) || numbers.size() != NUMBERS_LENGTH) {
-            throw new IllegalInputException(String.format("잘못된 갯수의 숫자들입니다. 숫자는 %d개 여야 합니다.", NUMBERS_LENGTH));
+        if(Objects.isNull(numbers)){
+            return new NumberContainer(Collections.emptyList());
         }
-        return new NumberContainer(numbers.get(0), numbers.get(1), numbers.get(2));
+        return new NumberContainer(numbers);
     }
 
-    private NumberContainer(int firstNumber, int secondNumber, int thirdNumber) {
-        this.numbers = Arrays.asList(firstNumber, secondNumber, thirdNumber);
+    public static NumberContainer from(String numberString) {
+        return from(convertStringToList(numberString));
+    }
+
+    private static List<Integer> convertStringToList(String numberString) {
+        if(Objects.isNull(numberString)){
+            return Collections.emptyList();
+        }
+        List<Integer> numbers = new ArrayList<>(numberString.length());
+        for (int i = 0; i < numberString.length(); i++) {
+            numbers.add(NumberUtil.characterToInteger(numberString.charAt(i)));
+        }
+        return numbers;
+    }
+
+    private NumberContainer(List<Integer> numbers) {
+        this.numbers = numbers;
     }
 
     public int getNumberAt(int idx){
-        if(idx < 0 || idx >= 3){
+        if(idx < 0 || idx >= getNumberLength()){
             throw new IllegalInputException(String.format("잘못된 인덱스 입니다 : %d", idx));
         }
         return this.numbers.get(idx);
+    }
+
+    public int getNumberLength() {
+        return this.numbers.size();
     }
 
 }
