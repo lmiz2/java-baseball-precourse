@@ -14,14 +14,16 @@ public class EventLoopProcessor implements Processor{
     public EventLoopProcessor() {
         this.eventQueue = new LinkedBlockingQueue<>();
         this.stopRequired = new AtomicBoolean(false);
-        this.eventLoop = new Thread(() -> {
-            while (!this.stopRequired.get()) {
-                Runnable runnable = this.eventQueue.poll();
-                if (Objects.nonNull(runnable)) {
-                    runnable.run();
-                }
+        this.eventLoop = new Thread(this::loop);
+    }
+
+    private void loop() {
+        while (!this.stopRequired.get()) {
+            Runnable runnable = this.eventQueue.poll();
+            if (Objects.nonNull(runnable)) {
+                runnable.run();
             }
-        });
+        }
     }
 
     @Override
