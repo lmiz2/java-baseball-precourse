@@ -7,7 +7,7 @@ public class BaseBallResult {
     public enum ResultSymbol{
         STRIKE("스트라이크"),
         BALL("볼"),
-        NOTHING("낫씽");
+        NOTHING("낫싱");
 
         private final String symbol;
 
