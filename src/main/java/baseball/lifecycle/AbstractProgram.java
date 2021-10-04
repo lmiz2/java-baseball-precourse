@@ -9,24 +9,17 @@ public abstract class AbstractProgram implements Program{
 
     private final Input input;
     private final Output output;
-    private final Processor processor;
 
-    public AbstractProgram(Input input, Output output, Processor processor) {
+    public AbstractProgram(Input input, Output output) {
         this.input = input;
         this.output = output;
-        this.processor = processor;
-        processor.start();
     }
 
-    protected void addRunnable(Runnable runnable){
-        processor.add(runnable);
-    }
-
-    protected void readInput(Consumer<String> consumer){
-        processor.add(() -> consumer.accept(input.read()));
+    protected String readInput(){
+        return input.read();
     }
 
     protected void writeOutput(String text){
-        processor.add(() -> output.write(text));
+        output.write(text);
     }
 }

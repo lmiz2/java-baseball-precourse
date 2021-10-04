@@ -7,12 +7,8 @@ import baseball.io.Output;
 
 public class BaseBallGameProgram extends GameProgram{
 
-    public BaseBallGameProgram(Input input, Output output, Processor processor) {
-        super(
-                new BaseballGame(input, output, 3),
-                input,
-                output,
-                processor);
+    public BaseBallGameProgram(Input input, Output output) {
+        super(new BaseballGame(input, output, 3), input, output);
         super.boot();
     }
 }

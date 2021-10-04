@@ -11,21 +11,21 @@ public abstract class GameProgram extends AbstractProgram {
 
     private final Game game;
 
-    public GameProgram(Game game, Input input, Output output, Processor processor) {
-        super(input, output, processor);
+    public GameProgram(Game game, Input input, Output output) {
+        super(input, output);
         this.game = game;
     }
 
     @Override
     public void boot() {
-        addRunnable(game::start);
-        addRunnable(this::displayMenu);
+        game.start();
+        displayMenu();
     }
 
     @Override
     public void terminate() {
         writeOutput("게임을 완전히 종료합니다.");
-        addRunnable(() -> System.exit(0));
+        System.exit(0);
     }
 
     private void displayMenu() {
@@ -38,18 +38,21 @@ public abstract class GameProgram extends AbstractProgram {
     }
 
     private void declineProcess(){
-        readInput(command -> {
-            if (startGameIfStartCommand(command)) return;
-            if (finishGameIfFinishCommand(command)) return;
-            wrongInputDetectedAlert();
-            declineProcess();
-        });
+        String command = readInput();
+        if (startGameIfStartCommand(command)) {
+            return;
+        }
+        if (finishGameIfFinishCommand(command)) {
+            return;
+        }
+        wrongInputDetectedAlert();
+        declineProcess();
     }
 
     private boolean startGameIfStartCommand(String read) {
         if(START_COMMAND.equals(read)){
-            addRunnable(game::start);
-            addRunnable(this::displayMenu);
+            game.start();
+            displayMenu();
             return true;
         }
         return false;
@@ -57,7 +60,7 @@ public abstract class GameProgram extends AbstractProgram {
 
     private boolean finishGameIfFinishCommand(String read) {
         if(FINISH_COMMAND.equals(read)){
-            addRunnable(this::terminate);
+            terminate();
             return true;
         }
         return false;
