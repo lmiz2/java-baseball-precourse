@@ -25,7 +25,6 @@ public abstract class GameProgram extends AbstractProgram {
     @Override
     public void terminate() {
         writeOutput("게임을 완전히 종료합니다.");
-        System.exit(0);
     }
 
     private void displayMenu() {
