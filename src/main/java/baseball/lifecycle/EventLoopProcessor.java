@@ -20,9 +20,13 @@ public class EventLoopProcessor implements Processor{
     private void loop() {
         while (!this.stopRequired.get()) {
             Runnable runnable = this.eventQueue.poll();
-            if (Objects.nonNull(runnable)) {
-                runnable.run();
-            }
+            runIfNonNull(runnable);
+        }
+    }
+
+    private void runIfNonNull(Runnable runnable) {
+        if (Objects.nonNull(runnable)) {
+            runnable.run();
         }
     }
 
